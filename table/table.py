@@ -1,13 +1,14 @@
 # Imports
 from colorama import Fore, Style
 from table import settings
+from table import cell
 
 # `row` is for `print_table`
 row = ""
 
 
 class Table:
-    def __init__(self, columns):
+    def __init__(self, columns: list):
         # Create and the columns to the table
         self.table = []
 
@@ -24,7 +25,7 @@ class Table:
         # Get how long `columns` is
         self.variables_in_row = len(columns)
 
-    def add_row(self, *rows):
+    def add_row(self, *rows: list):
         """ Add a new row to the table """
         for new_row in rows:
             # Get every row
@@ -93,7 +94,7 @@ class Table:
 
         print(table_extra)
 
-    def edit_cell(self, cell_column, cell_row, new_value):
+    def edit_cell(self, cell_column: int, cell_row: int, new_value: None or str):
         """ Edit a cell directly """
         try:
             # `_` is not needed is why it is _

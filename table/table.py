@@ -48,6 +48,7 @@ class Table:
                     appended_row.append("_")
             """
 
+            # Repeat until all the columns are filled, or show a warning/error
             while len(new_row) != self.variables_in_row:
                 if settings.ALLOW_NONE:
                     # Currently '-' acts as None
@@ -122,4 +123,5 @@ class Table:
                         )
                     return
             else:
+                # Set the cell to the value if all of above is avoided
                 self.table[cell_row][cell_column] = new_value

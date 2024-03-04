@@ -1,7 +1,7 @@
 # Imports
 from colorama import Fore, Style
 from table import settings
-from table import cell
+from table.cell import Cell
 
 # `row` is for `print_table`
 row = ""
@@ -19,8 +19,12 @@ class Table:
             all_columns_key.append(name)
         """
 
-        # Add the `columns` to the table
-        self.table.append(columns)
+        # Add the cells to the table
+        added_cells = []
+        for heading in columns:
+            added_cells.append(Cell(str(heading)))
+
+        self.table.append(added_cells)
 
         # Get how long `columns` is
         self.variables_in_row = len(columns)
@@ -67,7 +71,11 @@ class Table:
                     return
 
             # Add the new row to the table
-            self.table.append(new_row)
+            added_cells = []
+            for cell in new_row:
+                added_cells.append(Cell(str(cell)))
+
+            self.table.append(added_cells)
 
     def print_table(self):
         """ Use for debugging ONLY!! """
@@ -77,13 +85,13 @@ class Table:
 
         for row in self.table:
             for index in range(len(row)):
-                text += row[index] + " | "
+                text += row[index].__str__() + " | "
             print_table.append(text)
             text = "| "
 
         table_extra = "+"
         for i in self.table[0]:
-            for _ in range(len(i) + len(self.table[0])):
+            for _ in range(len(i.__str__()) + len(self.table[0])):
                 table_extra += "-"
         table_extra += "+"
 
@@ -111,7 +119,7 @@ class Table:
             if new_value is None:
                 # See if `new_value` is None
                 if settings.ALLOW_NONE:
-                    self.table[cell_row][cell_column] = "-"
+                    self.table[cell_row][cell_column].edit_name("-")
                 else:
                     if settings.GIVE_WARNING:
                         print(
@@ -125,4 +133,4 @@ class Table:
                     return
             else:
                 # Set the cell to the value if all of above is avoided
-                self.table[cell_row][cell_column] = new_value
+                self.table[cell_row][cell_column].edit_name(new_value)

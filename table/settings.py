@@ -1,3 +1,4 @@
+# This is version v1.0
 # This is where you can change aspects of the tables you create
 
 # This decides whether you get warnings or not

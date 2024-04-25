@@ -2,6 +2,8 @@
 from colorama import Fore, Style
 from table import settings
 from table.cell import Cell
+import json
+import os
 
 # `row` is for `print_table`
 row = ""
@@ -78,29 +80,33 @@ class Table:
             self.table.append(added_cells)
 
     def print_table(self):
-        """ Use for debugging ONLY!! """
+        """ Use for checking the table """
         global row
-        text = "| "
+        text = "|"
         print_table = []
-
-        for row in self.table:
-            for index in range(len(row)):
-                text += row[index].__str__() + " | "
-            print_table.append(text)
-            text = "| "
-
-        table_extra = "+"
+        row_length = []
         for i in self.table[0]:
-            for _ in range(len(i.__str__()) + len(self.table[0])):
-                table_extra += "-"
-        table_extra += "+"
+            row_length.append(len(i.__str__()))
+        row_length = max(row_length)
+        row_padding = " "*row_length
 
-        print(table_extra)
+        for row in self.table[1:]:
+            for index in range(len(row)):
+                if len(row[index].__str__()) <= row_length-3:
+                    text += row[index].__str__() + row_padding[len(row[index].__str__()):] + " | "
+                else:
+                    text += row[index].__str__()[0:row_length-3] + "..." + " | "
+                # print("text")
+                # print(text)
+            print_table.append(text)
+            text = "|"
 
+        border = "+" + "-"*(len("|" + " | ".join([i.__str__() for i in self.table[0]]) + " |")-2) + "+"
+        print(border)
+        print("|" + " | ".join([i.__str__() for i in self.table[0]]) + " |")
         for row in print_table:
             print(row)
-
-        print(table_extra)
+        print(border)
 
     def edit_cell(self, cell_column: int, cell_row: int, new_value: None or str):
         """ Edit a cell directly """
@@ -134,3 +140,19 @@ class Table:
             else:
                 # Set the cell to the value if all of above is avoided
                 self.table[cell_row][cell_column].edit_name(new_value)
+
+    def save_data(self, table_name: str) -> str:
+        """ Returns the path of the saved file and saves the file """
+        if os.path.isdir(settings.SAVE_PATH):
+            with open(os.path.join(str(settings.SAVE_PATH), str(table_name)), "w") as f:
+                json_data = {"data": []}
+                for table_row in self.table:
+                    filtered_row = []
+                    for i in table_row:
+                        filtered_row.append(i.__str__())
+
+                    json_data["data"].append(filtered_row)
+
+                json.dump(json_data, f)
+
+        return os.path.join(str(settings.SAVE_PATH), str(table_name))

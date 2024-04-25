@@ -11,3 +11,6 @@ new_table.edit_cell(cell_row=5, cell_column=7, new_value=None)  # Error
 
 # Print the table
 new_table.print_table()
+
+# Save the table
+path = new_table.save_data("new_table")

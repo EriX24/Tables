@@ -13,6 +13,7 @@ class Table:
     def __init__(self, columns: list):
         # Create and the columns to the table
         self.table = []
+        added_cells = []
 
         # Can be expressed just by `columns`
         """
@@ -21,10 +22,30 @@ class Table:
             all_columns_key.append(name)
         """
 
-        # Add the cells to the table
-        added_cells = []
+        # Check if a value in columns is invalid
         for heading in columns:
-            added_cells.append(Cell(str(heading)))
+            if heading is None or heading == "" or len(heading) < 3:
+                if settings.ALLOW_INVALID_ENTRY:
+                    dash = "-"
+                    blank = ""
+                    if not heading:
+                        change = "None"
+                        heading = ""
+                    else:
+                        change = "---"[len(heading):]
+                    print(
+                        f"{Fore.LIGHTYELLOW_EX}Warning!!: {heading+change.replace(dash, blank)} is invalid!! It has been replaced with {heading}{change}{Style.RESET_ALL}"
+                    )
+                    added_cells.append(Cell(str(f"{heading}{change}")))
+                else:
+                    raise ValueError("Headings cannot be `None`, empty or have a length lower than 3")
+            else:
+                added_cells.append(Cell(str(heading)))
+
+        # Add the cells to the table
+        # added_cells = []
+        # for heading in columns:
+        #     added_cells.append(Cell(str(heading)))
 
         self.table.append(added_cells)
 
@@ -84,20 +105,19 @@ class Table:
         global row
         text = "| "
         print_table = []
-        row_length = []
+        row_lengths = []
         for i in self.table[0]:
-            row_length.append(len(i.__str__()))
-        row_length = max(row_length)
-        row_padding = " "*row_length
+            row_lengths.append(len(i.__str__()))
 
         for row in self.table:
             for index in range(len(row)):
+                row_length = row_lengths[index]
+                row_padding = " " * row_length
+
                 if len(row[index].__str__()) <= row_length:
                     text += row[index].__str__() + row_padding[len(row[index].__str__()):] + " | "
                 else:
                     text += row[index].__str__()[0:row_length-3] + "..." + " | "
-                # print("text")
-                # print(text)
             print_table.append(text)
             text = "| "
 

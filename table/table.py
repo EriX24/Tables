@@ -82,7 +82,7 @@ class Table:
     def print_table(self):
         """ Use for checking the table """
         global row
-        text = "|"
+        text = "| "
         print_table = []
         row_length = []
         for i in self.table[0]:
@@ -90,21 +90,30 @@ class Table:
         row_length = max(row_length)
         row_padding = " "*row_length
 
-        for row in self.table[1:]:
+        for row in self.table:
             for index in range(len(row)):
-                if len(row[index].__str__()) <= row_length-3:
+                if len(row[index].__str__()) <= row_length:
                     text += row[index].__str__() + row_padding[len(row[index].__str__()):] + " | "
                 else:
                     text += row[index].__str__()[0:row_length-3] + "..." + " | "
                 # print("text")
                 # print(text)
             print_table.append(text)
-            text = "|"
+            text = "| "
 
-        border = "+" + "-"*(len("|" + " | ".join([i.__str__() for i in self.table[0]]) + " |")-2) + "+"
+        border = "+" + "-"*(len(print_table[0])-3) + "+"
         print(border)
-        print("|" + " | ".join([i.__str__() for i in self.table[0]]) + " |")
-        for row in print_table:
+        print(print_table[0])
+        out = ""
+        for i in print_table[0]:
+            if i == "|":
+                out += "+"
+            else:
+                out += "-"
+        print(out[:-1])
+
+        # print("|" + " | ".join([i.__str__() for i in self.table[0]]) + " |")
+        for row in print_table[1:]:
             print(row)
         print(border)
 

@@ -1,5 +1,5 @@
 class Cell:
-    def __init__(self, cell_value: str):
+    def __init__(self, cell_value):
         self.cell_value = cell_value
 
     def __str__(self):

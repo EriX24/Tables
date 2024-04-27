@@ -1,6 +1,6 @@
 import os
 
-# This is version v1.2
+# This is version v1.3
 # This is where you can change aspects of the tables you create
 
 # This decides whether you get warnings or not

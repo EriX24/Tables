@@ -1,6 +1,6 @@
 # Tables
 Bugs:
- - not really any bug I can see
+ - **JSON** is not compatible with objects so, it will become the _object tag_
 
 Controls:
  - Most of the controls are 'explained' in <u>main.py</u>
@@ -8,11 +8,11 @@ Controls:
 Info:
  - I made a <u>settings.py</u> to decide certain things
 
-Things to metion:
+Things to mention:
  - I finally got the "YongbinFan..." fixed. Who-hoo!!
  - This is just for fun!! :D
  - This isn't the final version!
 
-C u soon!!! (I'm finally finished with django so hopfully I can upload more now :D)
+C u soon!!! (I'm finally finished with django, so hopefully I can upload more now :D)
 
 ## EriX24

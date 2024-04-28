@@ -36,7 +36,8 @@ class Table:
                         else:
                             change = "---"[len(heading):]
                         print(
-                            f"{Fore.LIGHTYELLOW_EX}Warning!!: {heading+change.replace(dash, blank)} is invalid!! It has been replaced with {heading}{change}{Style.RESET_ALL}"
+                            f"{Fore.LIGHTYELLOW_EX}Warning!!: {heading + change.replace(dash, blank)} is invalid!!"
+                            f" It has been replaced with {heading}{change}{Style.RESET_ALL}"
                         )
                         added_cells.append(Cell(str(f"{heading}{change}")))
                     else:
@@ -147,7 +148,7 @@ class Table:
             print_table.append(text)
             text = "| "
 
-        border = "+" + "-"*(len(print_table[0])-3) + "+"
+        border = "+" + "-" * (len(print_table[0]) - 3) + "+"
         print(border)
         print(print_table[0])
         out = ""
@@ -205,11 +206,12 @@ class Table:
                     filtered_row = []
                     for i in table_row:
                         choices = isinstance(i.__str__(), object) and not isinstance(i.__str__(), list) and not \
-                                    isinstance(i.__str__(), dict) and not isinstance(i.__str__(), str) \
-                                    and not isinstance(i.__str__(), int)
+                            isinstance(i.__str__(), dict) and not isinstance(i.__str__(), str) \
+                            and not isinstance(i.__str__(), int)
                         if choices:
                             filtered_row.append("<O>")
-                            print(f"{Fore.RED}Alert: You cannot save a object it has been replaced with '<O>'{Style.RESET_ALL}")
+                            print(
+                                f"{Fore.RED}Alert: You cannot save a object it has been replaced with '<O>'{Style.RESET_ALL}")
                         else:
                             filtered_row.append(i.__str__())
 

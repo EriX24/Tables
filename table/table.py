@@ -36,7 +36,7 @@ class Table:
                         else:
                             change = "---"[len(heading):]
                         print(
-                            f"{Fore.LIGHTYELLOW_EX}Warning!!: {heading+change.replace(dash, blank)} is invalid!! It has been replaced with {heading}{change}{Fore.LIGHTYELLOW_EX}"
+                            f"{Fore.LIGHTYELLOW_EX}Warning!!: {heading+change.replace(dash, blank)} is invalid!! It has been replaced with {heading}{change}{Style.RESET_ALL}"
                         )
                         added_cells.append(Cell(str(f"{heading}{change}")))
                     else:
